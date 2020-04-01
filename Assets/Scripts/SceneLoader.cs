@@ -13,6 +13,7 @@ public class SceneLoader : MonoBehaviour {
 		}
 		else {
 			SceneManager.LoadScene((int)SceneID.MainMenu);
+			Destroy(GameObject.FindObjectOfType<GameMaster>());
 		}
 	}
 

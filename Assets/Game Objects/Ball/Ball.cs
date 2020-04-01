@@ -18,6 +18,7 @@ public class Ball : MonoBehaviour {
 	Vector2 launchDirection;
 	[SerializeField] SpriteRenderer aimingArrow = null;
 	AudioSource audioSource;
+	Rigidbody2D rb;
 
 	// Debug
 
@@ -26,6 +27,7 @@ public class Ball : MonoBehaviour {
 	void Start() {
 		paddlePosDiff = transform.position.y - paddle.transform.position.y;
 		audioSource = GetComponent<AudioSource>();
+		rb = GetComponent<Rigidbody2D>();
 	}
 
 	// Update is called once per frame
@@ -63,6 +65,7 @@ public class Ball : MonoBehaviour {
 			aimingArrow.enabled = false;
 			GetComponent<Rigidbody2D>().velocity = launchVector;
 			Destroy(aimingArrow.gameObject);
+			
 		}
 	}
 

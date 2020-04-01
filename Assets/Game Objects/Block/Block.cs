@@ -10,9 +10,9 @@ public class Block : MonoBehaviour {
 	int blockHealth = 0;
 	int pointsForDestroyed = 10;
 	SpriteRenderer sprite;
-	[SerializeField] AudioClip breakSound;
-	[SerializeField] GameObject visualEffect;
-	[SerializeField] Sprite[] hitSprites;
+	[SerializeField] AudioClip breakSound = null;
+	[SerializeField] GameObject visualEffect = null;
+	[SerializeField] Sprite[] hitSprites = null;
 
 	private void Start() {
 		sprite = GetComponent<SpriteRenderer>();
@@ -33,8 +33,9 @@ public class Block : MonoBehaviour {
 			TriggerVFX();
 			Destroy(gameObject);
 		}
-
-		GetComponent<SpriteRenderer>().sprite = hitSprites[blockHealth - 1];
+		else {
+			GetComponent<SpriteRenderer>().sprite = hitSprites[blockHealth - 1];
+		}
 	}
 
 	void TriggerVFX() {

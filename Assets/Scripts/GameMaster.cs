@@ -10,8 +10,8 @@ public class GameMaster : MonoBehaviour {
 	List<GameObject> blocks = new List<GameObject>();
 	int blockCount;
 	int currentScore = 0;
-	[SerializeField] TextMeshProUGUI scoreText;
-	[SerializeField] TextMeshProUGUI blocksText;
+	[SerializeField] TextMeshProUGUI scoreText = null;
+	[SerializeField] TextMeshProUGUI blocksText = null;
 
 	void Awake() {
 		int gameMasterCount = FindObjectsOfType<GameMaster>().Length;
@@ -31,8 +31,7 @@ public class GameMaster : MonoBehaviour {
 
 	void OnSceneLoaded(Scene scene, LoadSceneMode mode){
 		if(scene.buildIndex == (int)SceneID.EndScene) {
-			gameObject.SetActive(false);
-			Destroy(gameObject);
+			transform.GetChild(0).gameObject.SetActive(false);
 		} else {
 			Cursor.visible = false;
 			Cursor.lockState = CursorLockMode.Confined;
@@ -63,11 +62,6 @@ public class GameMaster : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.Escape)) {
 			Cursor.visible = !Cursor.visible;
 		}
-	}
-
-	private void OnDestroy() {
-		Cursor.visible = true;
-		Cursor.lockState = CursorLockMode.None;
 	}
 
 	public void OnBlockDestroy(GameObject block, int points){
