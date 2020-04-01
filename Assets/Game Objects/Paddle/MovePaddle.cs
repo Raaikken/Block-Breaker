@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MovePaddle : MonoBehaviour {
 	// Variables
+	public bool isPaddleFrozen = false;
 
 	// Internal Variables
 	float mousePos;
@@ -20,8 +21,10 @@ public class MovePaddle : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update() {
-		mousePos = (Input.mousePosition.x / Screen.width) * screenUnitWidth;
-		mousePos = Mathf.Clamp(mousePos, 1, screenUnitWidth - 1);
-		transform.position = new Vector2(mousePos, transform.position.y);
+		if(!isPaddleFrozen) {
+			mousePos = (Input.mousePosition.x / Screen.width) * screenUnitWidth;
+			mousePos = Mathf.Clamp(mousePos, 1, screenUnitWidth - 1);
+			transform.position = new Vector2(mousePos, transform.position.y);
+		}
 	}
 }
