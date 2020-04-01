@@ -119,6 +119,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 546b0c2cf491b98428a4dfd6995da4cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isUnbreakable: 0
   blockMaxHealth: 3
   gameMaster: {fileID: 0}
   breakSound: {fileID: 8300000, guid: ebc9ca1e294aa324cb74fac3e5b3e563, type: 3}
+  visualEffect: {fileID: 100000, guid: 7d846c02296ef4dc4abff04ce3e5262c, type: 3}
+  hitSprites:
+  - {fileID: 21300000, guid: 7fdffeb1630c28844a158d8dd213032d, type: 3}
+  - {fileID: 21300000, guid: fb0b7d91133542241b2a5083c2aa0920, type: 3}
+  - {fileID: 21300000, guid: d79473f1daf76cc4bb03fafaacc2762e, type: 3}
