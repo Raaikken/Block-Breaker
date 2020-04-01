@@ -8,7 +8,7 @@ public class SceneLoader : MonoBehaviour {
 	// Get current scene and load the next one
 	// Or main menu if at the end scene
 	public void LoadNextScene() {
-		if ((SceneManager.GetActiveScene().buildIndex + 1) <= 2) {
+		if ((SceneManager.GetActiveScene().buildIndex + 1) <= (int)SceneID.EndScene) {
 			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 		}
 		else {
@@ -17,7 +17,7 @@ public class SceneLoader : MonoBehaviour {
 	}
 
 	public void LoadFirstLevel() {
-		
+		SceneManager.LoadScene((int)SceneID.Level1);
 	}
 
 	public void ExitToDesktop(){

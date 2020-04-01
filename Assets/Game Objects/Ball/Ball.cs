@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour {
 	// Variables
-	[SerializeField] GameObject paddle;
+	[SerializeField] GameObject paddle = null;
 	[SerializeField] float launchSpeed = 10f;
 	[SerializeField] float screenUnitWidth = 16f;
 	[SerializeField] float screenUnitHeight = 12f;
+	[SerializeField] AudioClip[] ballSounds = null;
 
 	// Internal Variables
-	[SerializeField] Vector2 mousePos;
+	Vector2 mousePos;
 	float paddlePosDiff;
 	bool isBallLaunched = false;
 	bool isAiming = false;
-	[SerializeField] Vector2 launchDirection;
-	[SerializeField] SpriteRenderer aimingArrow;
+	Vector2 launchDirection;
+	[SerializeField] SpriteRenderer aimingArrow = null;
+	AudioSource audioSource;
 
 	// Debug
 
@@ -23,16 +25,16 @@ public class Ball : MonoBehaviour {
 	// Start is called before the first frame update
 	void Start() {
 		paddlePosDiff = transform.position.y - paddle.transform.position.y;
+		audioSource = GetComponent<AudioSource>();
 	}
 
 	// Update is called once per frame
 	void Update() {
-		mousePos = new Vector2((Input.mousePosition.x / Screen.width) * screenUnitWidth,
-								(Input.mousePosition.y / Screen.height) * screenUnitHeight);
-		launchDirection = mousePos - (Vector2)transform.position;
-		launchDirection = launchDirection.normalized;
-
 		if(isAiming) {
+			mousePos = new Vector2((Input.mousePosition.x / Screen.width) * screenUnitWidth,
+								   (Input.mousePosition.y / Screen.height) * screenUnitHeight);
+			launchDirection = mousePos - (Vector2)transform.position;
+			launchDirection = launchDirection.normalized;
 			LaunchOnClick();
 		}
 
@@ -64,7 +66,10 @@ public class Ball : MonoBehaviour {
 		}
 	}
 
-	public Vector2 GetLaunchDirection() {
-		return launchDirection;
+	private void OnCollisionEnter2D(Collision2D other) {
+		if(isBallLaunched) {
+			AudioClip clip = ballSounds[Random.Range(0, ballSounds.Length)];
+			audioSource.PlayOneShot(clip);
+		}
 	}
 }

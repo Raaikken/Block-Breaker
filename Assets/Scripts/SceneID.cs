@@ -1,5 +1,5 @@
 ﻿public enum SceneID : int {
 	MainMenu,
-	GameScene,
-	EndScene
+	Level1,
+	EndScene = 6
 }

@@ -4,22 +4,25 @@ using UnityEngine;
 
 public class Block : MonoBehaviour {
 	// Variables
-	[SerializeField] int blockHealth = 2;
+	[SerializeField] int blockMaxHealth = 2;
+	[SerializeField] GameMaster gameMaster = null;
+	int blockHealth = 0;
 	SpriteRenderer sprite;
+	[SerializeField] AudioClip breakSound;
 
 	private void Start() {
 		sprite = GetComponent<SpriteRenderer>();
+		blockHealth = blockMaxHealth;
+		gameMaster = GameObject.FindObjectOfType<GameMaster>();
 	}
 
 	private void OnCollisionEnter2D(Collision2D other) {
 		blockHealth--;
 
 		if(blockHealth <= 0) {
+			AudioSource.PlayClipAtPoint(breakSound, Camera.main.transform.position);
+			gameMaster.OnBlockDestroy(gameObject);
 			Destroy(gameObject);
-		}
-
-		if(blockHealth == 1) {
-			sprite.color = Color.red;
 		}
 	}
 }

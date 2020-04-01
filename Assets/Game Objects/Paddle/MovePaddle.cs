@@ -9,7 +9,7 @@ public class MovePaddle : MonoBehaviour {
 	// Internal Variables
 	float mousePos;
 	float clampValue;
-	[SerializeField] float screenUnitWidth;
+	[SerializeField] float screenUnitWidth = 0;
 
 	// Debug
 
