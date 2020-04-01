@@ -7,12 +7,15 @@ using UnityEngine.SceneManagement;
 public class GameMaster : MonoBehaviour {
 	[Range(0.1f, 5f)][SerializeField] float timeSpeed = 1f;
 	SceneLoader sceneLoader = null;
-	List<GameObject> blocks = new List<GameObject>();
+	List<Block> blocks = new List<Block>();
+	List<Ball> balls = new List<Ball>();
 	int blockCount;
 	int currentScore = 0;
 	[SerializeField] TextMeshProUGUI scoreText = null;
 	[SerializeField] TextMeshProUGUI blocksText = null;
+	[SerializeField] bool isAutoPlayEnabled = false;
 
+	// On first initialization
 	void Awake() {
 		int gameMasterCount = FindObjectsOfType<GameMaster>().Length;
 		if(gameMasterCount > 1) {
@@ -29,6 +32,7 @@ public class GameMaster : MonoBehaviour {
 		SceneManager.sceneUnloaded += OnSceneUnloaded;
 	}
 
+	// Used for initialization if the object wasn't destroyed on load
 	void OnSceneLoaded(Scene scene, LoadSceneMode mode){
 		if(scene.buildIndex == (int)SceneID.EndScene) {
 			transform.GetChild(0).gameObject.SetActive(false);
@@ -37,7 +41,9 @@ public class GameMaster : MonoBehaviour {
 			Cursor.lockState = CursorLockMode.Confined;
 		}
 
-		blocks.AddRange(GameObject.FindGameObjectsWithTag("Block"));
+		balls.Clear();
+
+		blocks.AddRange(GameObject.FindObjectsOfType<Block>());
 		sceneLoader = GameObject.FindObjectOfType<SceneLoader>();
 
 		scoreText.text = "Score: " + currentScore.ToString();
@@ -64,7 +70,15 @@ public class GameMaster : MonoBehaviour {
 		}
 	}
 
-	public void OnBlockDestroy(GameObject block, int points){
+	public void OnBallDestroyed(Ball ball) {
+		balls.Remove(ball);
+
+		if(balls.Count <= 0) {
+			sceneLoader.LoadEndScene();
+		}
+	}
+
+	public void OnBlockDestroy(Block block, int points){
 		currentScore += points;
 		blocks.Remove(block);
 		scoreText.text = "Score: " + currentScore.ToString();
@@ -73,5 +87,17 @@ public class GameMaster : MonoBehaviour {
 		if(blocks.Count <= 0) {
 			sceneLoader.LoadNextScene();
 		}
+	}
+
+	public void AddNewBall(Ball ball) {
+		balls.Add(ball);
+	}
+
+	public bool GetIsAutoPlayEnabled() {
+		return isAutoPlayEnabled;
+	}
+
+	public List<Ball> GetAllBalls() {
+		return balls;
 	}
 }

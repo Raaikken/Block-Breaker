@@ -22,6 +22,10 @@ public class SceneLoader : MonoBehaviour {
 		SceneManager.LoadScene((int)SceneID.Level1);
 	}
 
+	public void LoadEndScene() {
+		SceneManager.LoadScene((int)SceneID.EndScene);
+	}
+
 	public void ExitToDesktop(){
 		Application.Quit();
 	}

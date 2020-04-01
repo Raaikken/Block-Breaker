@@ -19,6 +19,7 @@ public class Ball : MonoBehaviour {
 	[SerializeField] SpriteRenderer aimingArrow = null;
 	AudioSource audioSource;
 	Rigidbody2D rb;
+	GameMaster gameMaster;
 
 	// Debug
 
@@ -28,6 +29,8 @@ public class Ball : MonoBehaviour {
 		paddlePosDiff = transform.position.y - paddle.transform.position.y;
 		audioSource = GetComponent<AudioSource>();
 		rb = GetComponent<Rigidbody2D>();
+		gameMaster = FindObjectOfType<GameMaster>();
+		gameMaster.AddNewBall(this);
 	}
 
 	// Update is called once per frame
@@ -70,6 +73,16 @@ public class Ball : MonoBehaviour {
 	}
 
 	private void OnCollisionEnter2D(Collision2D other) {
+		if(other.collider.tag == "Kill Floor") {
+			Destroy(gameObject);
+		}
+
+		if(other.collider.tag == "Paddle") {
+			launchDirection = other.GetContact(0).point - (Vector2)other.transform.position;
+			Vector2 launchVector = launchDirection.normalized * launchSpeed;
+			GetComponent<Rigidbody2D>().velocity = launchVector;
+		}
+
 		if(isBallLaunched) {
 			AudioClip clip = ballSounds[Random.Range(0, ballSounds.Length)];
 			audioSource.PlayOneShot(clip);

@@ -8,6 +8,8 @@ TagManager:
   - Scene Loader
   - Game Master
   - Unbreakable
+  - Ball
+  - Paddle
   layers:
   - Default
   - TransparentFX

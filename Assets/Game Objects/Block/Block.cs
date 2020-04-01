@@ -29,7 +29,7 @@ public class Block : MonoBehaviour {
 
 		if(blockHealth <= 0) {
 			AudioSource.PlayClipAtPoint(breakSound, Camera.main.transform.position);
-			gameMaster.OnBlockDestroy(gameObject, pointsForDestroyed);
+			gameMaster.OnBlockDestroy(this, pointsForDestroyed);
 			TriggerVFX();
 			Destroy(gameObject);
 		}

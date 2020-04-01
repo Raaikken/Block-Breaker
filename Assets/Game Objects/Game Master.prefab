@@ -47,6 +47,7 @@ MonoBehaviour:
   timeSpeed: 1
   scoreText: {fileID: 2722957211429985522}
   blocksText: {fileID: 6363689329521684305}
+  isAutoPlayEnabled: 0
 --- !u!1001 &1796421668849395869
 PrefabInstance:
   m_ObjectHideFlags: 0
